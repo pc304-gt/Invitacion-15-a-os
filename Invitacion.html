@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación a mis 15 años</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Efecto de luces de fondo */
+        .background-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .light {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s infinite;
+        }
+
+        .light1 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(173, 216, 230, 0.3) 0%, transparent 70%);
+            top: 10%;
+            left: 10%;
+            animation: float 8s infinite;
+        }
+
+        .light2 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(240, 248, 255, 0.2) 0%, transparent 70%);
+            bottom: 20%;
+            right: 15%;
+            animation: float 10s infinite reverse;
+        }
+
+        .light3 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(176, 196, 222, 0.25) 0%, transparent 70%);
+            top: 50%;
+            right: 5%;
+            animation: float 12s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+            50% { transform: translateY(-30px) translateX(20px); opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        /* Sobre cerrado */
+        .envelope-container {
+            position: relative;
+            width: 350px;
+            height: 250px;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+            border: 3px solid #2c3e50;
+            border-radius: 5px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(173, 216, 230, 0.2);
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .envelope:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), 0 0 50px rgba(173, 216, 230, 0.4);
+            transform: translateY(-10px);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+            border-bottom: 2px dashed #999;
+            clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+            transition: all 0.6s ease;
+            transform-origin: top;
+            z-index: 10;
+        }
+
+        .envelope:hover .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 3px solid #2c3e50;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .envelope-text {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Invitación */
+        .invitation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+            padding: 20px;
+            overflow-y: auto;
+            padding-top: 40px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .invitation.active {
+            display: flex;
+        }
+
+        .invitation-card {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            border: 5px solid #0f3460;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(173, 216, 230, 0.1);
+            animation: slideIn 0.6s ease;
+            margin: 0 auto 50px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .invitation-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #0f3460;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .invitation-header::before,
+        .invitation-header::after {
+            content: '✦';
+            color: #0f3460;
+            font-size: 20px;
+            margin: 0 10px;
+        }
+
+        .invitation-title {
+            font-size: 48px;
+            color: #0f3460;
+            margin: 15px 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .quinceañera-name {
+            font-size: 32px;
+            color: #16213e;
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+            font-family: 'Georgia', serif;
+        }
+
+        .invitation-subtitle {
+            font-size: 24px;
+            color: #555;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .celebration-text {
+            font-size: 18px;
+            color: #555;
+            margin: 25px 0;
+            line-height: 1.8;
+            font-family: 'Georgia', serif;
+            text-align: justify;
+        }
+
+        .invitation-photo-container {
+            width: 100%;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .invitation-photo {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border: 5px solid #0f3460;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(173, 216, 230, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .invitation-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(173, 216, 230, 0.3);
+        }
+
+        /* Botones de funciones */
+        .action-buttons {
+            margin: 30px 0;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: 2px solid #0f3460;
+            background: white;
+            color: #0f3460;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            background: #0f3460;
+            color: white;
+            box-shadow: 0 0 15px rgba(15, 52, 96, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.active {
+            background: #0f3460;
+            color: white;
+            box-shadow: 0 0 20px rgba(15, 52, 96, 0.5);
+        }
+
+        .invitation-details {
+            margin: 30px 0;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.08) 0%, rgba(173, 216, 230, 0.12) 100%);
+            padding: 25px;
+            border-left: 5px solid #0f3460;
+            border-radius: 8px;
+        }
+
+        .details-title {
+            font-size: 20px;
+            color: #0f3460;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .detail-row {
+            margin: 18px 0;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .detail-icon {
+            font-size: 20px;
+            min-width: 30px;
+            text-align: center;
+            color: #0f3460;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #0f3460;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            color: #555;
+            font-size: 15px;
+        }
+
+        /* Mapa */
+        .map-container {
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        /* Mensaje especial extendido */
+        .message-box {
+            margin: 30px 0;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.05) 0%, rgba(22, 33, 62, 0.08) 100%);
+            padding: 25px;
+            border: 2px dashed #0f3460;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .message-box p {
+            font-size: 17px;
+            color: #16213e;
+            line-height: 1.8;
+            margin: 10px 0;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+        }
+
+        .invitation-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 3px solid #0f3460;
+            color: #16213e;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #0f3460;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            background: #16213e;
+            transform: rotate(90deg);
+            box-shadow: 0 0 15px rgba(15, 52, 96, 0.5);
+        }
+
+        /* Modal de confirmación */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1010;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 3px solid #0f3460;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-content h2 {
+            color: #0f3460;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .modal-content p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-confirm {
+            background: #0f3460;
+            color: white;
+        }
+
+        .modal-btn-confirm:hover {
+            background: #16213e;
+            box-shadow: 0 0 15px rgba(15, 52, 96, 0.3);
+        }
+
+        .modal-btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #4caf50;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1020;
+            animation: slideInRight 0.5s ease;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Responsive para tablets */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .envelope-container {
+                width: 280px;
+                height: 200px;
+            }
+
+            .invitation-card {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            .invitation-title {
+                font-size: 38px;
+                letter-spacing: 2px;
+            }
+
+            .quinceañera-name {
+                font-size: 28px;
+            }
+
+            .invitation-subtitle {
+                font-size: 20px;
+            }
+
+            .celebration-text {
+                font-size: 16px;
+            }
+
+            .action-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .detail-row {
+                margin: 15px 0;
+                font-size: 15px;
+            }
+
+            .detail-label {
+                font-size: 14px;
+            }
+
+            .detail-value {
+                font-size: 14px;
+            }
+
+            .message-box p {
+                font-size: 15px;
+            }
+
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .envelope-container {
+                width: 240px;
+                height: 170px;
+            }
+
+            .invitation-card {
+                padding: 20px 15px;
+                border-width: 3px;
+            }
+
+            .invitation-title {
+                font-size: 32px;
+                letter-spacing: 1px;
+            }
+
+            .quinceañera-name {
+                font-size: 24px;
+            }
+
+            .invitation-subtitle {
+                font-size: 18px;
+            }
+
+            .celebration-text {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .invitation-photo {
+                max-width: 280px;
+            }
+
+            .action-buttons {
+                gap: 8px;
+            }
+
+            .action-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .detail-row {
+                margin: 12px 0;
+                font-size: 14px;
+                gap: 10px;
+            }
+
+            .detail-icon {
+                font-size: 18px;
+                min-width: 25px;
+            }
+
+            .detail-label {
+                font-size: 13px;
+            }
+
+            .detail-value {
+                font-size: 13px;
+            }
+
+            .message-box {
+                padding: 20px 15px;
+            }
+
+            .message-box p {
+                font-size: 14px;
+            }
+
+            .invitation-footer {
+                font-size: 14px;
+            }
+
+            .close-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                padding: 25px 20px;
+            }
+
+            .modal-content h2 {
+                font-size: 20px;
+            }
+
+            .success-message {
+                top: 15px;
+                right: 15px;
+                padding: 15px 20px;
+                font-size: 14px;
+            }
+
+            .map-container iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efectos de luces de fondo -->
+    <div class="background-lights">
+        <div class="light light1"></div>
+        <div class="light light2"></div>
+        <div class="light light3"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Sobre cerrado -->
+        <div class="envelope-container" onclick="openInvitation()">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="envelope-text">
+                        Presiona sobre mí<br>
+                        <span style="font-size: 14px; margin-top: 10px; display: block;">💝</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invitación abierta -->
+    <div class="invitation" id="invitationModal">
+        <button class="close-btn" onclick="closeInvitation()">✕</button>
+        
+        <div class="invitation-card shine-effect">
+            <!-- Encabezado -->
+            <div class="invitation-header">
+                <div style="font-size: 40px; color: #0f3460; margin-bottom: 10px;">💎</div>
+                <div class="invitation-title">Mis 15 años</div>
+                <div class="quinceañera-name" id="quinceaneraName">Beily Pérez</div>
+                <div class="invitation-subtitle">Una tarde Muy Especial</div>
+            </div>
+
+            <!-- Celebración -->
+            <div class="celebration-text">
+                <p>Te invito a ser parte de un evento memorable al celebrar mis quince años de vida. Será un evento lleno de alegría y bendición donde juntos daremos gracias a Dios por estos 15 años de vida que me a regalado. ¡Espero poder contar con tu precencia ya que este momento será muy importante para mi!</p>
+            </div>
+
+            <!-- Foto -->
+            <div class="invitation-photo-container">
+                <img 
+                    src="https://github.com/pc304-gt/Foto/raw/main/WhatsApp%20Image%202026-04-15%20at%206.06.10%20PM.jpeg" 
+                    alt="Quinceañera" 
+                    class="invitation-photo" 
+                    id="mainPhoto"
+                >
+            </div>
+
+            <!-- Botones de acciones -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="confirmAssistance()" title="Confirmar asistencia">
+                    ✅ Confirmar Asistencia
+                </button>
+                <button class="action-btn" onclick="openLocation()" title="Ver ubicación">
+                    📍 Ver Ubicación
+                </button>
+                <button class="action-btn" onclick="downloadInvitation()" title="Descargar invitación">
+                    📥 Descargar
+                </button>
+            </div>
+
+            <!-- Detalles del evento -->
+            <div class="invitation-details">
+                <div class="details-title">📍 Detalles del Evento</div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-content">
+                        <span class="detail-label">Fecha:</span>
+                        <span class="detail-value">Sábado, 16 de Mayo de 2,026</span>
+                    </div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-icon">⏰</div>
+                    <div class="detail-content">
+                        <span class="detail-label">Hora:</span>
+                        <span class="detail-value">2:30 PM a 5:00 PM</span>
+                    </div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-content">
+                        <span class="detail-label">Lugar:</span>
+                        <span class="detail-value">Iglesia Evangélica Fe Esperanza y Amor<br>Cantón Valle Verde.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="map-container" id="mapContainer" style="display: none;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3929.813419596114!2d-91.81868340234602!3d15.104180071789296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sgt!4v1776715605822!5m2!1ses-419!2sgt" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <!-- Mensaje especial -->
+            <div class="message-box">
+                <p>✨ "Estos quince años representan el inicio de nuevas aventuras y sueños por cumplir. 
+                Tu presencia hará que esta actividad sea aún más especial. ¡Nos vemos pronto!" ✨</p>
+            </div>
+
+            <!-- Pie de página -->
+            <div class="invitation-footer">
+                Con amor y gratitud,<br>
+                <strong>Beily Pérez y Familia 💕</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de asistencia -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h2>¿Confirmar Asistencia?</h2>
+            <p>Indica si podrás asistir a la celebración de mis 15 años.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-confirm" onclick="confirmYes()">✅ Sí, Confirmo</button>
+                <button class="modal-btn modal-btn-cancel" onclick="confirmNo()">❌ No Puedo Asistir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <div class="success-message" id="successMessage">
+        ✅ ¡Acción completada con éxito!
+    </div>
+
+    <script>
+        // Número de WhatsApp donde se enviarán las confirmaciones
+        const WHATSAPP_NUMBER = '+50244892132';
+
+        function openInvitation() {
+            document.getElementById('invitationModal').classList.add('active');
+        }
+
+        function closeInvitation() {
+            document.getElementById('invitationModal').classList.remove('active');
+        }
+
+        function showSuccess(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.textContent = message || '✅ ¡Acción completada con éxito!';
+            successMsg.classList.add('active');
+            setTimeout(() => {
+                successMsg.classList.remove('active');
+            }, 3000);
+        }
+
+        // Confirmar asistencia
+        function confirmAssistance() {
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function confirmYes() {
+            document.getElementById('confirmModal').classList.remove('active');
+            
+            // Obtener información del usuario
+            const userName = prompt('¿Cuál es tu nombre?', 'Invitado');
+            
+            if (userName) {
+                // Crear mensaje para WhatsApp
+                const message = `Hola, confirmo mi asistencia a los 15 años de Beily Pérez. Mi nombre es: ${userName}`;
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(message)}`;
+                
+                // Abrir WhatsApp directamente
+                window.location.href = whatsappUrl;
+                showSuccess('✅ Tu confirmación será enviada por WhatsApp');
+            }
+        }
+
+        function confirmNo() {
+            document.getElementById('confirmModal').classList.remove('active');
+            
+            // Obtener información del usuario
+            const userName = prompt('¿Cuál es tu nombre?', 'Invitado');
+            
+            if (userName) {
+                // Crear mensaje para WhatsApp
+                const message = `Hola, lamento comunicar que no podré asistir a los 15 años de Beily Pérez. Mi nombre es: ${userName}`;
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(message)}`;
+                
+                // Abrir WhatsApp directamente
+                window.location.href = whatsappUrl;
+                showSuccess('😢 Tu respuesta será enviada por WhatsApp');
+            }
+        }
+
+        // Abrir ubicación
+        function openLocation() {
+            const mapContainer = document.getElementById('mapContainer');
+            if (mapContainer.style.display === 'none') {
+                mapContainer.style.display = 'block';
+                showSuccess('📍 Mapa cargado. Desplázate para verlo');
+            } else {
+                mapContainer.style.display = 'none';
+            }
+        }
+
+        // Descargar invitación
+        function downloadInvitation() {
+            showSuccess('📥 Descargando invitación...');
+            // Simular descarga
+            setTimeout(() => {
+                alert('La invitación está lista para descargar en tu dispositivo');
+            }, 1000);
+        }
+
+        // Cerrar modales al hacer clic fuera
+        window.addEventListener('click', function(e) {
+            const confirmModal = document.getElementById('confirmModal');
+            const invitationModal = document.getElementById('invitationModal');
+
+            if (e.target === confirmModal) {
+                confirmModal.classList.remove('active');
+            }
+            if (e.target === invitationModal) {
+                closeInvitation();
+            }
+        });
+    </script>
+</body>
+</html>
